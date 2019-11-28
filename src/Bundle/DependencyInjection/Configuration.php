@@ -12,7 +12,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('knp_doctrine_behaviors');
 
         if (!method_exists($builder, 'getRootNode')) {
-            $rootNode = $builder->root('simple_things_entity_audit');
+            $rootNode = $builder->root('knp_doctrine_behaviors');
         } else {
             $rootNode = $builder->getRootNode();
         }
