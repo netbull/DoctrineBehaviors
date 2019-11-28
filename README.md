@@ -1,3 +1,4 @@
+# It looks like the official repo is abandoned, so as a temporary fix this can be used. When this PR [#430](https://github.com/KnpLabs/DoctrineBehaviors/pull/430) is merged and a new version released, this repo can be removed.
 # Doctrine2 Behaviors
 
 [![Build Status](https://travis-ci.org/KnpLabs/DoctrineBehaviors.svg?branch=master)](http://travis-ci.org/KnpLabs/DoctrineBehaviors)

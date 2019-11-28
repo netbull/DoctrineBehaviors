@@ -9,9 +9,15 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $builder = new TreeBuilder();
-        $builder
-            ->root('knp_doctrine_behaviors')
+        $builder = new TreeBuilder('knp_doctrine_behaviors');
+
+        if (!method_exists($builder, 'getRootNode')) {
+            $rootNode = $builder->root('simple_things_entity_audit');
+        } else {
+            $rootNode = $builder->getRootNode();
+        }
+
+        $rootNode
             ->beforeNormalization()
                 ->always(function (array $config) {
                     if (empty($config)) {
