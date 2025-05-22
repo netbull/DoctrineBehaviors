@@ -1,3 +1,24 @@
+# 1.0.0 (2025-05-22)
+
+
+### Bug Fixes
+
+* change the package usability ([5ba9c84](https://github.com/netbull/DoctrineBehaviors/commit/5ba9c8479e57c291310f21ef53fe58d57b79067e))
+* change the package usability ([42bfcb8](https://github.com/netbull/DoctrineBehaviors/commit/42bfcb82a3653566607c425f277865d28cc547b6))
+* **deps:** remove unnecessary PHP 8 polyfill, close [#652](https://github.com/netbull/DoctrineBehaviors/issues/652) ([#653](https://github.com/netbull/DoctrineBehaviors/issues/653)) ([5f1d5ea](https://github.com/netbull/DoctrineBehaviors/commit/5f1d5ea47c36a9b8f03b837150b8e1d4cb19625a))
+* **phpstan:** allow PHPStan to run over Translatable/Translation interfaces, close [#588](https://github.com/netbull/DoctrineBehaviors/issues/588) ([#589](https://github.com/netbull/DoctrineBehaviors/issues/589)) ([c777caa](https://github.com/netbull/DoctrineBehaviors/commit/c777caa57aecb31bb6e8369640477741ca0bdf39))
+* use [@phpstan-param](https://github.com/phpstan-param) for a more precise type on `setTranslations` ([3013bec](https://github.com/netbull/DoctrineBehaviors/commit/3013bec4416644a48e279c95782748f4ccbd41ef))
+
+
+### Features
+
+* add doctrine/common 3 support, close [#590](https://github.com/netbull/DoctrineBehaviors/issues/590) ([#591](https://github.com/netbull/DoctrineBehaviors/issues/591)) ([e438d69](https://github.com/netbull/DoctrineBehaviors/commit/e438d69cb216bdf51f7b81000c476da2c404d809))
+
+
+### Reverts
+
+* Revert "fix(config): exclude PHPStan folder, fix [#537](https://github.com/netbull/DoctrineBehaviors/issues/537)" ([a8dc94f](https://github.com/netbull/DoctrineBehaviors/commit/a8dc94fa72ad8f8674e4a5269bb9ee004dcccfaa))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
