@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Contract\Entity\UuidableInterface;
-use Knp\DoctrineBehaviors\Model\Uuidable\UuidableTrait;
+use NetBull\DoctrineBehaviors\Contract\Entity\UuidableInterface;
+use NetBull\DoctrineBehaviors\Model\Uuidable\UuidableTrait;
 
 /**
  * @ORM\Entity

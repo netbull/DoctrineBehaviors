@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Knp\DoctrineBehaviors\Contract\Provider\LocaleProviderInterface;
-use Knp\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
-use Knp\DoctrineBehaviors\EventSubscriber\LoggableEventSubscriber;
+use NetBull\DoctrineBehaviors\Contract\Provider\LocaleProviderInterface;
+use NetBull\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
+use NetBull\DoctrineBehaviors\EventSubscriber\LoggableEventSubscriber;
 use Knp\DoctrineBehaviors\Tests\DatabaseLoader;
 use Knp\DoctrineBehaviors\Tests\Provider\TestLocaleProvider;
 use Knp\DoctrineBehaviors\Tests\Provider\TestUserProvider;

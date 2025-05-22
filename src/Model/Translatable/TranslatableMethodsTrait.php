@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Translatable;
+namespace NetBull\DoctrineBehaviors\Model\Translatable;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
-use Knp\DoctrineBehaviors\Exception\TranslatableException;
+use NetBull\DoctrineBehaviors\Contract\Entity\TranslationInterface;
+use NetBull\DoctrineBehaviors\Exception\TranslatableException;
 
 trait TranslatableMethodsTrait
 {
     /**
-     * @return Collection<string, TranslationInterface>
+     * @return Collection<TranslationInterface>
      */
-    public function getTranslations()
+    public function getTranslations(): Collection
     {
         // initialize collection, usually in ctor
         if ($this->translations === null) {
@@ -27,6 +27,7 @@ trait TranslatableMethodsTrait
     /**
      * @param Collection<string, TranslationInterface> $translations
      * @phpstan-param iterable<TranslationInterface> $translations
+     * @throws TranslatableException
      */
     public function setTranslations(iterable $translations): void
     {
@@ -68,7 +69,9 @@ trait TranslatableMethodsTrait
      * exist, it will first try to fallback default locale If any translation doesn't exist, it will be added to
      * newTranslations collection. In order to persist new translations, call mergeNewTranslations method, before flush
      *
-     * @param string $locale The locale (en, ru, fr) | null If null, will try with current locale
+     * @param string|null $locale The locale (en, ru, fr) | null If null, will try with current locale
+     * @param bool $fallbackToDefault
+     * @return TranslationInterface
      */
     public function translate(?string $locale = null, bool $fallbackToDefault = true): TranslationInterface
     {
@@ -97,26 +100,43 @@ trait TranslatableMethodsTrait
         }
     }
 
+    /**
+     * @param string $locale
+     * @return void
+     */
     public function setCurrentLocale(string $locale): void
     {
         $this->currentLocale = $locale;
     }
 
+    /**
+     * @return string
+     */
     public function getCurrentLocale(): string
     {
         return $this->currentLocale ?: $this->getDefaultLocale();
     }
 
+    /**
+     * @param string $locale
+     * @return void
+     */
     public function setDefaultLocale(string $locale): void
     {
         $this->defaultLocale = $locale;
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultLocale(): string
     {
         return $this->defaultLocale;
     }
 
+    /**
+     * @return string
+     */
     public static function getTranslationEntityClass(): string
     {
         return static::class . 'Translation';
@@ -127,7 +147,9 @@ trait TranslatableMethodsTrait
      * exist, it will first try to fallback default locale If any translation doesn't exist, it will be added to
      * newTranslations collection. In order to persist new translations, call mergeNewTranslations method, before flush
      *
-     * @param string $locale The locale (en, ru, fr) | null If null, will try with current locale
+     * @param string|null $locale The locale (en, ru, fr) | null If null, will try with current locale
+     * @param bool $fallbackToDefault
+     * @return TranslationInterface
      */
     protected function doTranslate(?string $locale = null, bool $fallbackToDefault = true): TranslationInterface
     {
@@ -169,7 +191,7 @@ trait TranslatableMethodsTrait
      *
      * @return mixed The translated value of the field for current locale
      */
-    protected function proxyCurrentLocaleTranslation(string $method, array $arguments = [])
+    protected function proxyCurrentLocaleTranslation(string $method, array $arguments = []): mixed
     {
         // allow $entity->name call $entity->getName() in templates
         if (! method_exists(self::getTranslationEntityClass(), $method)) {
@@ -201,6 +223,10 @@ trait TranslatableMethodsTrait
         return null;
     }
 
+    /**
+     * @param string $locale
+     * @return string|null
+     */
     protected function computeFallbackLocale(string $locale): ?string
     {
         if (strrchr($locale, '_') !== false) {
@@ -212,8 +238,9 @@ trait TranslatableMethodsTrait
 
     /**
      * @param Collection|mixed $translations
+     * @throws TranslatableException
      */
-    private function ensureIsIterableOrCollection($translations): void
+    private function ensureIsIterableOrCollection(mixed $translations): void
     {
         if ($translations instanceof Collection) {
             return;
@@ -228,6 +255,10 @@ trait TranslatableMethodsTrait
         );
     }
 
+    /**
+     * @param string $locale
+     * @return TranslationInterface|null
+     */
     private function resolveFallbackTranslation(string $locale): ?TranslationInterface
     {
         $fallbackLocale = $this->computeFallbackLocale($locale);

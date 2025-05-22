@@ -2,23 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Provider;
+namespace NetBull\DoctrineBehaviors\Provider;
 
-use Knp\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
-use Symfony\Component\Security\Core\Security;
+use NetBull\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class UserProvider implements UserProviderInterface
 {
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     * @param string|null $blameableUserEntity
+     */
     public function __construct(
-        private Security $security,
+        private TokenStorageInterface $tokenStorage,
         private ?string $blameableUserEntity = null
     ) {
     }
 
-    public function provideUser()
+    /**
+     * @return object|string|null
+     */
+    public function provideUser(): object|string|null
     {
-        $token = $this->security->getToken();
-        if ($token !== null) {
+        if ($token = $this->tokenStorage->getToken()) {
             $user = $token->getUser();
             if ($this->blameableUserEntity) {
                 if ($user instanceof $this->blameableUserEntity) {
@@ -32,10 +38,12 @@ final class UserProvider implements UserProviderInterface
         return null;
     }
 
+    /**
+     * @return string|null
+     */
     public function provideUserEntity(): ?string
     {
-        $user = $this->provideUser();
-        if ($user === null) {
+        if (!$user = $this->provideUser()) {
             return null;
         }
 

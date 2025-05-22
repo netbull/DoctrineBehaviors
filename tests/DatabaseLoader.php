@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Tests;
+namespace NetBull\DoctrineBehaviors\Tests;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 
 final class DatabaseLoader
 {
@@ -16,9 +17,12 @@ final class DatabaseLoader
     ) {
         // @see https://stackoverflow.com/a/35222045/1348344
         $configuration = $connection->getConfiguration();
-        $configuration->setSQLLogger();
+        $configuration->setMiddlewares([]);
     }
 
+    /**
+     * @throws ToolsException
+     */
     public function reload(): void
     {
         $classMetadataFactory = $this->entityManager->getMetadataFactory();
@@ -35,6 +39,7 @@ final class DatabaseLoader
 
     /**
      * @param class-string[] $entityClasses
+     * @throws ToolsException
      */
     public function reloadEntityClasses(array $entityClasses): void
     {

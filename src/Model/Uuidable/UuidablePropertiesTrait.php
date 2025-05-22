@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Uuidable;
+namespace NetBull\DoctrineBehaviors\Model\Uuidable;
 
 use Ramsey\Uuid\UuidInterface;
 
@@ -11,5 +11,5 @@ trait UuidablePropertiesTrait
     /**
      * @var UuidInterface|string|null
      */
-    protected $uuid;
+    protected string|null|UuidInterface $uuid = null;
 }

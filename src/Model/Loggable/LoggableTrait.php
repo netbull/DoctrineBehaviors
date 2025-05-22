@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Loggable;
+namespace NetBull\DoctrineBehaviors\Model\Loggable;
 
-use DateTime;
+use DateTimeInterface;
 
 trait LoggableTrait
 {
+    /**
+     * @param array $changeSets
+     * @return string
+     */
     public function getUpdateLogMessage(array $changeSets = []): string
     {
         $message = [];
@@ -17,7 +21,7 @@ trait LoggableTrait
             for ($i = 0, $s = $itemCount; $i < $s; ++$i) {
                 $item = $changeSet[$i];
 
-                if ($item instanceof DateTime) {
+                if ($item instanceof DateTimeInterface) {
                     $changeSet[$i] = $item->format('Y-m-d H:i:s.u');
                 }
             }
@@ -32,16 +36,27 @@ trait LoggableTrait
         return implode("\n", $message);
     }
 
+    /**
+     * @return string
+     */
     public function getCreateLogMessage(): string
     {
         return sprintf('%s #%s created', self::class, $this->getId());
     }
 
+    /**
+     * @return string
+     */
     public function getRemoveLogMessage(): string
     {
         return sprintf('%s #%s removed', self::class, $this->getId());
     }
 
+    /**
+     * @param string $property
+     * @param array $changeSet
+     * @return string
+     */
     private function createChangeSetMessage(string $property, array $changeSet): string
     {
         return sprintf(

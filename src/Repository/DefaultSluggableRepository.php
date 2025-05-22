@@ -2,26 +2,37 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Repository;
+namespace NetBull\DoctrineBehaviors\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use NetBull\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 
 final class DefaultSluggableRepository
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         private EntityManagerInterface $entityManager
     ) {
     }
 
+    /**
+     * @param SluggableInterface $sluggable
+     * @param string $uniqueSlug
+     * @return bool
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
     public function isSlugUniqueFor(SluggableInterface $sluggable, string $uniqueSlug): bool
     {
         $entityClass = $sluggable::class;
 
-        $queryBuilder = $this->entityManager->createQueryBuilder()
-            ->select('COUNT(e)')
-            ->from($entityClass, 'e')
-            ->andWhere('e.slug = :slug')
+        $qb = $this->entityManager->getRepository($sluggable::class)->createQueryBuilder('e');
+        $qb->select($qb->expr()->count('e.id'))
+            ->where($qb->expr()->eq('e.slug', ':slug'))
             ->setParameter('slug', $uniqueSlug);
 
         $identifiers = $this->entityManager->getClassMetadata($entityClass)
@@ -32,14 +43,12 @@ final class DefaultSluggableRepository
                 continue;
             }
 
-            $normalizedField = \str_replace('.', '_', $field);
+            $normalizedField = str_replace('.', '_', $field);
 
-            $queryBuilder
-                ->andWhere(\sprintf('e.%s != :%s', $field, $normalizedField))
+            $qb->andWhere($qb->expr()->neq('e.'.$field, $normalizedField))
                 ->setParameter($normalizedField, $value);
         }
 
-        return ! (bool) $queryBuilder->getQuery()
-            ->getSingleScalarResult();
+        return !$qb->getQuery()->getSingleScalarResult();
     }
 }

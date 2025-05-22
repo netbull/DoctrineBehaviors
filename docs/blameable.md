@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Contract\Entity\BlameableInterface;
-use Knp\DoctrineBehaviors\Model\Blameable\BlameableTrait;
+use NetBull\DoctrineBehaviors\Contract\Entity\BlameableInterface;
+use NetBull\DoctrineBehaviors\Model\Blameable\BlameableTrait;
 
 /**
  * @ORM\Entity
@@ -27,7 +27,7 @@ class Category implements BlameableInterface
 ## How it Works
 
 By default, the current user from Symfony\Security is used.
-If you want to change it, just implement `Knp\DoctrineBehaviors\Contract\Provider\UserProviderInterface` yourself and override native service.
+If you want to change it, just implement `NetBull\DoctrineBehaviors\Contract\Provider\UserProviderInterface` yourself and override native service.
 
 ## Usage
 
@@ -36,7 +36,7 @@ Then, you can use it like that:
 ```php
 <?php
 
-/** @var Knp\DoctrineBehaviors\Contract\Entity\BlameableInterface $category */
+/** @var NetBull\DoctrineBehaviors\Contract\Entity\BlameableInterface $category */
 $category = new Category();
 $entityManager->persist($category);
 

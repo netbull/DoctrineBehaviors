@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Tests\ORM;
+namespace NetBull\DoctrineBehaviors\Tests\ORM;
 
 use Iterator;
-use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
-use Knp\DoctrineBehaviors\Exception\TreeException;
-use Knp\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
-use Knp\DoctrineBehaviors\Tests\Fixtures\Entity\TreeNodeEntity;
-use Knp\DoctrineBehaviors\Tests\Fixtures\Repository\TreeNodeRepository;
+use NetBull\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
+use NetBull\DoctrineBehaviors\Exception\TreeException;
+use NetBull\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
+use NetBull\DoctrineBehaviors\Tests\Fixtures\Entity\TreeNodeEntity;
+use NetBull\DoctrineBehaviors\Tests\Fixtures\Repository\TreeNodeRepository;
 use Nette\Utils\Json;
 
 final class TreeNodeTest extends AbstractBehaviorTestCase

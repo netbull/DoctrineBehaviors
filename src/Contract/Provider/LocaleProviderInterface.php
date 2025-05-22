@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Contract\Provider;
+namespace NetBull\DoctrineBehaviors\Contract\Provider;
 
 interface LocaleProviderInterface
 {

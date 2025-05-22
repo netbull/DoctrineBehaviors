@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Tests\ORM;
+namespace NetBull\DoctrineBehaviors\Tests\ORM;
 
-use Knp\DoctrineBehaviors\Contract\Entity\UuidableInterface;
-use Knp\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
-use Knp\DoctrineBehaviors\Tests\Fixtures\Entity\UuidableEntity;
+use NetBull\DoctrineBehaviors\Contract\Entity\UuidableInterface;
+use NetBull\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
+use NetBull\DoctrineBehaviors\Tests\Fixtures\Entity\UuidableEntity;
 use Ramsey\Uuid\UuidInterface;
 
 final class UuidableTest extends AbstractBehaviorTestCase

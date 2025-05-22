@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Tests\ORM\Blameable;
+namespace NetBull\DoctrineBehaviors\Tests\ORM\Blameable;
 
 use Doctrine\Persistence\ObjectRepository;
-use Knp\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
-use Knp\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
-use Knp\DoctrineBehaviors\Tests\Fixtures\Entity\Blameable\BlameableEntity;
-use Knp\DoctrineBehaviors\Tests\Fixtures\Entity\UserEntity;
-use Knp\DoctrineBehaviors\Tests\Provider\EntityUserProvider;
+use NetBull\DoctrineBehaviors\Contract\Provider\UserProviderInterface;
+use NetBull\DoctrineBehaviors\Tests\AbstractBehaviorTestCase;
+use NetBull\DoctrineBehaviors\Tests\Fixtures\Entity\Blameable\BlameableEntity;
+use NetBull\DoctrineBehaviors\Tests\Fixtures\Entity\UserEntity;
+use NetBull\DoctrineBehaviors\Tests\Provider\EntityUserProvider;
 
 final class BlameableTest extends AbstractBehaviorTestCase
 {

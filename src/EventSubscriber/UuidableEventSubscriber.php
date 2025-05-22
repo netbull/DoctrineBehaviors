@@ -2,16 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\EventSubscriber;
+namespace NetBull\DoctrineBehaviors\EventSubscriber;
 
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
-use Knp\DoctrineBehaviors\Contract\Entity\UuidableInterface;
+use Doctrine\ORM\Mapping\MappingException;
+use NetBull\DoctrineBehaviors\Contract\Entity\UuidableInterface;
 
-final class UuidableEventSubscriber implements EventSubscriberInterface
+#[AsDoctrineListener(event: Events::loadClassMetadata)]
+#[AsDoctrineListener(event: Events::prePersist)]
+final class UuidableEventSubscriber
 {
+    /**
+     * @param LoadClassMetadataEventArgs $loadClassMetadataEventArgs
+     * @return void
+     * @throws MappingException
+     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
     {
         $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
@@ -35,21 +43,17 @@ final class UuidableEventSubscriber implements EventSubscriberInterface
         ]);
     }
 
-    public function prePersist(LifecycleEventArgs $lifecycleEventArgs): void
+    /**
+     * @param PrePersistEventArgs $args
+     * @return void
+     */
+    public function prePersist(PrePersistEventArgs $args): void
     {
-        $entity = $lifecycleEventArgs->getEntity();
-        if (! $entity instanceof UuidableInterface) {
+        $object = $args->getObject();
+        if (!$object instanceof UuidableInterface) {
             return;
         }
 
-        $entity->generateUuid();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [Events::loadClassMetadata, Events::prePersist];
+        $object->generateUuid();
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Contract\Entity;
+namespace NetBull\DoctrineBehaviors\Contract\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
@@ -16,7 +16,7 @@ interface TreeNodeInterface
     /**
      * @return string|int|null The field that will represent the node in the path
      */
-    public function getNodeId();
+    public function getNodeId(): int|string|null;
 
     /**
      * @return string The representation of path from all ancestors

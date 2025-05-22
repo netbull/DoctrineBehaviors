@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
-use Knp\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
+use NetBull\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
+use NetBull\DoctrineBehaviors\Model\Tree\TreeNodeTrait;
 
 /**
  * @ORM\Entity
@@ -38,7 +38,7 @@ class Category implements TreeNodeInterface
 ```php
 <?php
 
-/** @var Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface $category */
+/** @var NetBull\DoctrineBehaviors\Contract\Entity\TreeNodeInterface $category */
 $category = new Category();
 $category->setId(1);
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Timestampable;
+namespace NetBull\DoctrineBehaviors\Model\Timestampable;
 
 use DateTimeInterface;
 
@@ -11,10 +11,10 @@ trait TimestampablePropertiesTrait
     /**
      * @var DateTimeInterface
      */
-    protected $createdAt;
+    protected DateTimeInterface $createdAt;
 
     /**
      * @var DateTimeInterface
      */
-    protected $updatedAt;
+    protected DateTimeInterface $updatedAt;
 }

@@ -1,4 +1,5 @@
 # Doctrine Behaviors
+IT LOOKS LIKE THE OFFICIAL PACKAGE IS ABANDONED.
 
 [![Downloads](https://img.shields.io/packagist/dt/knplabs/doctrine-behaviors.svg?style=flat-square)](https://packagist.org/packages/knplabs/doctrine-behaviors)
 
@@ -38,7 +39,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Knp\DoctrineBehaviors\ORM\Tree\TreeTrait;
+use NetBull\DoctrineBehaviors\ORM\Tree\TreeTrait;
 
 final class CategoryRepository extends EntityRepository
 {

@@ -2,20 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\EventSubscriber;
+namespace NetBull\DoctrineBehaviors\EventSubscriber;
 
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
-use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Doctrine\ORM\Mapping\MappingException;
+use NetBull\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 
-final class TimestampableEventSubscriber implements EventSubscriberInterface
+#[AsDoctrineListener(event: Events::loadClassMetadata)]
+final class TimestampableEventSubscriber
 {
     public function __construct(
         private string $timestampableDateFieldType
     ) {
     }
 
+    /**
+     * @param LoadClassMetadataEventArgs $loadClassMetadataEventArgs
+     * @return void
+     * @throws MappingException
+     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
     {
         $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
@@ -24,7 +31,7 @@ final class TimestampableEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (! is_a($classMetadata->reflClass->getName(), TimestampableInterface::class, true)) {
+        if (!is_a($classMetadata->reflClass->getName(), TimestampableInterface::class, true)) {
             return;
         }
 
@@ -44,13 +51,5 @@ final class TimestampableEventSubscriber implements EventSubscriberInterface
                 ]);
             }
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [Events::loadClassMetadata];
     }
 }

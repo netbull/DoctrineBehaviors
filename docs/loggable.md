@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Loggable\LoggableTrait;
-use Knp\DoctrineBehaviors\Contract\Entity\LoggableInterface;
+use NetBull\DoctrineBehaviors\Model\Loggable\LoggableTrait;
+use NetBull\DoctrineBehaviors\Contract\Entity\LoggableInterface;
 
 /**
  * @ORM\Entity

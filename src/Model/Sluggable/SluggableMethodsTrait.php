@@ -2,18 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Sluggable;
+namespace NetBull\DoctrineBehaviors\Model\Sluggable;
 
-use Knp\DoctrineBehaviors\Exception\SluggableException;
+use NetBull\DoctrineBehaviors\Exception\SluggableException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 trait SluggableMethodsTrait
 {
+    /**
+     * @param string $slug
+     * @return void
+     */
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
+    /**
+     * @return string
+     */
     public function getSlug(): string
     {
         return $this->slug;
@@ -36,21 +43,35 @@ trait SluggableMethodsTrait
         $this->slug = $this->generateSlugValue($values);
     }
 
+    /**
+     * @return bool
+     */
     public function shouldGenerateUniqueSlugs(): bool
     {
         return false;
     }
 
+    /**
+     * @return string
+     */
     private function getSlugDelimiter(): string
     {
         return '-';
     }
 
+    /**
+     * @return bool
+     */
     private function shouldRegenerateSlugOnUpdate(): bool
     {
         return true;
     }
 
+    /**
+     * @param array $values
+     * @return string
+     * @throws SluggableException
+     */
     private function generateSlugValue(array $values): string
     {
         $usableValues = [];
@@ -70,6 +91,12 @@ trait SluggableMethodsTrait
         return strtolower($unicodeString->toString());
     }
 
+    /**
+     * @param array $values
+     * @param array $usableValues
+     * @return void
+     * @throws SluggableException
+     */
     private function ensureAtLeastOneUsableValue(array $values, array $usableValues): void
     {
         if (count($usableValues) >= 1) {
@@ -85,7 +112,7 @@ trait SluggableMethodsTrait
     /**
      * @return mixed|null
      */
-    private function resolveFieldValue(string $field)
+    private function resolveFieldValue(string $field): mixed
     {
         if (property_exists($this, $field)) {
             return $this->{$field};

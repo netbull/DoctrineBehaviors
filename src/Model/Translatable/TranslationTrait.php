@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Translatable;
+namespace NetBull\DoctrineBehaviors\Model\Translatable;
 
 trait TranslationTrait
 {

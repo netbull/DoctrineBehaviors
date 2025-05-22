@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Timestampable;
+namespace NetBull\DoctrineBehaviors\Model\Timestampable;
 
 trait TimestampableTrait
 {

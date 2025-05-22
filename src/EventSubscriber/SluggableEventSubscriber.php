@@ -2,18 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\EventSubscriber;
+namespace NetBull\DoctrineBehaviors\EventSubscriber;
 
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
-use Knp\DoctrineBehaviors\Repository\DefaultSluggableRepository;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use NetBull\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use NetBull\DoctrineBehaviors\Repository\DefaultSluggableRepository;
 
-final class SluggableEventSubscriber implements EventSubscriberInterface
+#[AsDoctrineListener(event: Events::loadClassMetadata)]
+#[AsDoctrineListener(event: Events::prePersist)]
+#[AsDoctrineListener(event: Events::preUpdate)]
+final class SluggableEventSubscriber
 {
     /**
      * @var string
@@ -26,9 +31,14 @@ final class SluggableEventSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
+    /**
+     * @param LoadClassMetadataEventArgs $loadClassMetadataEventArgs
+     * @return void
+     * @throws \Doctrine\ORM\Mapping\MappingException
+     */
+    public function loadClassMetadata(LoadClassMetadataEventArgs $args): void
     {
-        $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
+        $classMetadata = $args->getClassMetadata();
         if ($this->shouldSkip($classMetadata)) {
             return;
         }
@@ -40,24 +50,28 @@ final class SluggableEventSubscriber implements EventSubscriberInterface
         ]);
     }
 
-    public function prePersist(LifecycleEventArgs $lifecycleEventArgs): void
+    /**
+     * @param PrePersistEventArgs $args
+     * @return void
+     */
+    public function prePersist(PrePersistEventArgs $args): void
     {
-        $this->processLifecycleEventArgs($lifecycleEventArgs);
-    }
-
-    public function preUpdate(LifecycleEventArgs $lifecycleEventArgs): void
-    {
-        $this->processLifecycleEventArgs($lifecycleEventArgs);
+        $this->processLifecycleEventArgs($args);
     }
 
     /**
-     * @return string[]
+     * @param PreUpdateEventArgs $args
+     * @return void
      */
-    public function getSubscribedEvents(): array
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
-        return [Events::loadClassMetadata, Events::prePersist, Events::preUpdate];
+        $this->processLifecycleEventArgs($args);
     }
 
+    /**
+     * @param ClassMetadataInfo $classMetadataInfo
+     * @return bool
+     */
     private function shouldSkip(ClassMetadataInfo $classMetadataInfo): bool
     {
         if (! is_a($classMetadataInfo->getName(), SluggableInterface::class, true)) {
@@ -67,20 +81,28 @@ final class SluggableEventSubscriber implements EventSubscriberInterface
         return $classMetadataInfo->hasField(self::SLUG);
     }
 
+    /**
+     * @param LifecycleEventArgs $lifecycleEventArgs
+     * @return void
+     */
     private function processLifecycleEventArgs(LifecycleEventArgs $lifecycleEventArgs): void
     {
-        $entity = $lifecycleEventArgs->getEntity();
-        if (! $entity instanceof SluggableInterface) {
+        $object = $lifecycleEventArgs->getObject();
+        if (!$object instanceof SluggableInterface) {
             return;
         }
 
-        $entity->generateSlug();
+        $object->generateSlug();
 
-        if ($entity->shouldGenerateUniqueSlugs()) {
-            $this->generateUniqueSlugFor($entity);
+        if ($object->shouldGenerateUniqueSlugs()) {
+            $this->generateUniqueSlugFor($object);
         }
     }
 
+    /**
+     * @param SluggableInterface $sluggable
+     * @return void
+     */
     private function generateUniqueSlugFor(SluggableInterface $sluggable): void
     {
         $i = 0;
@@ -98,6 +120,11 @@ final class SluggableEventSubscriber implements EventSubscriberInterface
         $sluggable->setSlug($uniqueSlug);
     }
 
+    /**
+     * @param SluggableInterface $sluggable
+     * @param string $uniqueSlug
+     * @return bool
+     */
     private function isSlugUniqueInUnitOfWork(SluggableInterface $sluggable, string $uniqueSlug): bool
     {
         $scheduledEntities = $this->getOtherScheduledEntities($sluggable);

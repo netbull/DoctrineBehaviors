@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Tests;
+namespace NetBull\DoctrineBehaviors\Tests;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\DoctrineBehaviors\Tests\HttpKernel\DoctrineBehaviorsKernel;
+use Doctrine\ORM\Tools\ToolsException;
+use NetBull\DoctrineBehaviors\Tests\HttpKernel\DoctrineBehaviorsKernel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -17,7 +18,7 @@ abstract class AbstractBehaviorTestCase extends TestCase
     /**
      * @var EntityManagerInterface
      */
-    protected $entityManager;
+    protected ?EntityManagerInterface $entityManager = null;
 
     private ContainerInterface $container;
 
@@ -32,6 +33,10 @@ abstract class AbstractBehaviorTestCase extends TestCase
         $this->loadDatabaseFixtures();
     }
 
+    /**
+     * @return void
+     * @throws ToolsException
+     */
     protected function loadDatabaseFixtures(): void
     {
         /** @var DatabaseLoader $databaseLoader */
@@ -61,7 +66,7 @@ abstract class AbstractBehaviorTestCase extends TestCase
 
         $this->entityManager->getConnection()
             ->getConfiguration()
-            ->setSQLLogger($debugStack);
+            ->setMiddlewares([]);
 
         return $debugStack;
     }

@@ -2,37 +2,37 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Contract\Entity;
+namespace NetBull\DoctrineBehaviors\Contract\Entity;
 
 interface BlameableInterface
 {
     /**
-     * @param int|object|string $user
+     * @param object|int|string $user
      */
-    public function setCreatedBy($user): void;
+    public function setCreatedBy(object|int|string $user): void;
 
     /**
-     * @param int|object|string $user
+     * @param object|int|string $user
      */
-    public function setUpdatedBy($user): void;
+    public function setUpdatedBy(object|int|string $user): void;
 
     /**
-     * @param int|object|string $user
+     * @param object|int|string $user
      */
-    public function setDeletedBy($user): void;
-
-    /**
-     * @return int|object|string
-     */
-    public function getCreatedBy();
+    public function setDeletedBy(object|int|string $user): void;
 
     /**
      * @return int|object|string
      */
-    public function getUpdatedBy();
+    public function getCreatedBy(): object|int|string;
+
+    /**
+     * @return int|object|string
+     */
+    public function getUpdatedBy(): object|int|string;
 
     /**
      * @return int|object|string|null
      */
-    public function getDeletedBy();
+    public function getDeletedBy(): object|int|string|null;
 }

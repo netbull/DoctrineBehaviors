@@ -2,30 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Blameable;
+namespace NetBull\DoctrineBehaviors\Model\Blameable;
 
 trait BlameableMethodsTrait
 {
     /**
-     * @param string|int|object $user
+     * @param object|int|string $user
+     * @return void
      */
-    public function setCreatedBy($user): void
+    public function setCreatedBy(object|int|string $user): void
     {
         $this->createdBy = $user;
     }
 
     /**
-     * @param string|int|object $user
+     * @param object|int|string $user
+     * @return void
      */
-    public function setUpdatedBy($user): void
+    public function setUpdatedBy(object|int|string $user): void
     {
         $this->updatedBy = $user;
     }
 
     /**
-     * @param string|int|object $user
+     * @param object|int|string $user
+     * @return void
      */
-    public function setDeletedBy($user): void
+    public function setDeletedBy(object|int|string $user): void
     {
         $this->deletedBy = $user;
     }
@@ -33,23 +36,23 @@ trait BlameableMethodsTrait
     /**
      * @return int|object|string
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): object|int|string
     {
         return $this->createdBy;
     }
 
     /**
-     * @return int|object|string
+     * @return object|int|string
      */
-    public function getUpdatedBy()
+    public function getUpdatedBy(): object|int|string
     {
         return $this->updatedBy;
     }
 
     /**
-     * @return string|int|object|null
+     * @return object|int|string|null
      */
-    public function getDeletedBy()
+    public function getDeletedBy(): object|int|string|null
     {
         return $this->deletedBy;
     }

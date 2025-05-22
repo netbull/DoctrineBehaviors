@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\SoftDeletable;
+namespace NetBull\DoctrineBehaviors\Model\SoftDeletable;
 
 use DateTimeInterface;
 
@@ -11,5 +11,5 @@ trait SoftDeletablePropertiesTrait
     /**
      * @var DateTimeInterface|null
      */
-    protected $deletedAt;
+    protected ?DateTimeInterface $deletedAt = null;
 }

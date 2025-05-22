@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Sluggable;
+namespace NetBull\DoctrineBehaviors\Model\Sluggable;
 
 trait SluggableTrait
 {

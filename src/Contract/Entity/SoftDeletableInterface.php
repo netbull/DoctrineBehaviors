@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Contract\Entity;
+namespace NetBull\DoctrineBehaviors\Contract\Entity;
 
 use DateTimeInterface;
 

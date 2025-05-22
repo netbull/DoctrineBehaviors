@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\ORM\Tree;
+namespace NetBull\DoctrineBehaviors\ORM\Tree;
 
 use ArrayAccess;
 use Doctrine\ORM\QueryBuilder;
-use Knp\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
+use NetBull\DoctrineBehaviors\Contract\Entity\TreeNodeInterface;
 
 trait TreeTrait
 {
@@ -32,13 +32,18 @@ trait TreeTrait
      *
      * @return TreeNodeInterface[]|ArrayAccess|null
      */
-    public function getTree(string $path = '', string $rootAlias = 't', array $extraParams = [])
+    public function getTree(string $path = '', string $rootAlias = 't', array $extraParams = []): array|ArrayAccess|null
     {
         $results = $this->getFlatTree($path, $rootAlias, $extraParams);
 
         return $this->buildTree($results);
     }
 
+    /**
+     * @param TreeNodeInterface $treeNode
+     * @param string $rootAlias
+     * @return QueryBuilder
+     */
     public function getTreeExceptNodeAndItsChildrenQB(
         TreeNodeInterface $treeNode,
         string $rootAlias = 't'
@@ -55,7 +60,7 @@ trait TreeTrait
      *
      * @return ArrayAccess|TreeNodeInterface[]|null
      */
-    public function buildTree(array $results)
+    public function buildTree(array $results): array|ArrayAccess|null
     {
         if ($results === []) {
             return null;
@@ -89,8 +94,10 @@ trait TreeTrait
     }
 
     /**
-     * @param mixed[] $extraParams
-     * @return mixed[]
+     * @param string $path
+     * @param string $rootAlias
+     * @param array $extraParams
+     * @return array
      */
     public function getFlatTree(string $path, string $rootAlias = 't', array $extraParams = []): array
     {

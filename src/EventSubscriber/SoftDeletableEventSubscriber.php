@@ -2,43 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\EventSubscriber;
+namespace NetBull\DoctrineBehaviors\EventSubscriber;
 
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
-use Knp\DoctrineBehaviors\Contract\Entity\SoftDeletableInterface;
+use Doctrine\ORM\Mapping\MappingException;
+use NetBull\DoctrineBehaviors\Contract\Entity\SoftDeletableInterface;
 
-final class SoftDeletableEventSubscriber implements EventSubscriberInterface
+#[AsDoctrineListener(event: Events::loadClassMetadata)]
+#[AsDoctrineListener(event: Events::onFlush)]
+final class SoftDeletableEventSubscriber
 {
     /**
      * @var string
      */
     private const DELETED_AT = 'deletedAt';
 
-    public function onFlush(OnFlushEventArgs $onFlushEventArgs): void
-    {
-        $entityManager = $onFlushEventArgs->getEntityManager();
-        $unitOfWork = $entityManager->getUnitOfWork();
-
-        foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
-            if (! $entity instanceof SoftDeletableInterface) {
-                continue;
-            }
-
-            $oldValue = $entity->getDeletedAt();
-
-            $entity->delete();
-            $entityManager->persist($entity);
-
-            $unitOfWork->propertyChanged($entity, self::DELETED_AT, $oldValue, $entity->getDeletedAt());
-            $unitOfWork->scheduleExtraUpdate($entity, [
-                self::DELETED_AT => [$oldValue, $entity->getDeletedAt()],
-            ]);
-        }
-    }
-
+    /**
+     * @param LoadClassMetadataEventArgs $loadClassMetadataEventArgs
+     * @return void
+     * @throws MappingException
+     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $loadClassMetadataEventArgs): void
     {
         $classMetadata = $loadClassMetadataEventArgs->getClassMetadata();
@@ -47,7 +33,7 @@ final class SoftDeletableEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (! is_a($classMetadata->reflClass->getName(), SoftDeletableInterface::class, true)) {
+        if (!is_a($classMetadata->reflClass->getName(), SoftDeletableInterface::class, true)) {
             return;
         }
 
@@ -63,10 +49,28 @@ final class SoftDeletableEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return string[]
+     * @param OnFlushEventArgs $onFlushEventArgs
+     * @return void
      */
-    public function getSubscribedEvents(): array
+    public function onFlush(OnFlushEventArgs $onFlushEventArgs): void
     {
-        return [Events::onFlush, Events::loadClassMetadata];
+        $objectManager = $onFlushEventArgs->getObjectManager();
+        $unitOfWork = $objectManager->getUnitOfWork();
+
+        foreach ($unitOfWork->getScheduledEntityDeletions() as $object) {
+            if (!$object instanceof SoftDeletableInterface) {
+                continue;
+            }
+
+            $oldValue = $object->getDeletedAt();
+
+            $object->delete();
+            $objectManager->persist($object);
+
+            $unitOfWork->propertyChanged($object, self::DELETED_AT, $oldValue, $object->getDeletedAt());
+            $unitOfWork->scheduleExtraUpdate($object, [
+                self::DELETED_AT => [$oldValue, $object->getDeletedAt()],
+            ]);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Model\Blameable;
+namespace NetBull\DoctrineBehaviors\Model\Blameable;
 
 trait BlameableTrait
 {

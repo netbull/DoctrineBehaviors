@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Knp\DoctrineBehaviors\Contract\Entity;
+namespace NetBull\DoctrineBehaviors\Contract\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
@@ -11,7 +11,7 @@ interface TranslatableInterface
     /**
      * @return Collection<string, TranslationInterface>
      */
-    public function getTranslations();
+    public function getTranslations(): Collection;
 
     /**
      * @return Collection<string, TranslationInterface>
