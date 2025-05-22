@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.0...v7.0.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* change the package usability ([a98a984](https://github.com/netbull/DoctrineBehaviors/commit/a98a984bb28ab7772dc9b1b55984d6d0169a5651))
+
 ## [1.0.1](https://github.com/netbull/DoctrineBehaviors/compare/v1.0.0...v1.0.1) (2025-05-22)
 
 
