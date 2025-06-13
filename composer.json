@@ -42,7 +42,8 @@
         "phpstan/phpstan-doctrine": "^2.0.3",
         "phpstan/phpstan-phpunit": "^2.0.6",
         "symplify/phpstan-rules": "^14.1.1",
-        "phpstan/extension-installer": "^1.1"
+        "phpstan/extension-installer": "^1.1",
+        "rector/swiss-knife": "^2.2"
     },
     "autoload": {
         "psr-4": {
