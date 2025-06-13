@@ -7,21 +7,17 @@ use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([__DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/utils']);
-    $rectorConfig->importNames();
-    $rectorConfig->parallel();
-
-    $rectorConfig->skip([
+return RectorConfig::configure()->withPaths([__DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/utils'])
+    ->withComposerBased(doctrine: true)
+    ->withImportNames()
+    ->withParallel()
+    ->withSkip([
         RenamePropertyToMatchTypeRector::class => [__DIR__ . '/tests/ORM/'],
-    ]);
-
-    // doctrine annotations to attributes
-    $rectorConfig->sets([
+    ])
+    ->withSets([
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
         SetList::NAMING,
         LevelSetList::UP_TO_PHP_80,
     ]);
-};
