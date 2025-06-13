@@ -1,3 +1,10 @@
+## [7.0.4](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.3...v7.0.4) (2025-06-13)
+
+
+### Bug Fixes
+
+* ci ([37988df](https://github.com/netbull/DoctrineBehaviors/commit/37988dfbd881512a1c5bd577ee73f19d14d3f871))
+
 ## [7.0.3](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.2...v7.0.3) (2025-06-13)
 
 
