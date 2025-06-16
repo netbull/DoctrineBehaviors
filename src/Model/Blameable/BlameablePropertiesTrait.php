@@ -7,17 +7,17 @@ namespace NetBull\DoctrineBehaviors\Model\Blameable;
 trait BlameablePropertiesTrait
 {
     /**
-     * @var string|int|object
+     * @var string|int|object|null
      */
-    protected string|int|object $createdBy;
+    protected string|int|object|null $createdBy = null;
 
     /**
-     * @var string|int|object
+     * @var string|int|object|null
      */
-    protected string|int|object $updatedBy;
+    protected string|int|object|null $updatedBy = null;
 
     /**
-     * @var string|int|object
+     * @var string|int|object|null
      */
-    protected string|int|object $deletedBy;
+    protected string|int|object|null $deletedBy = null;
 }
