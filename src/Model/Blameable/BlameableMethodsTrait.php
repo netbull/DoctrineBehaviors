@@ -7,44 +7,44 @@ namespace NetBull\DoctrineBehaviors\Model\Blameable;
 trait BlameableMethodsTrait
 {
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      * @return void
      */
-    public function setCreatedBy(object|int|string $user): void
+    public function setCreatedBy(object|int|string|null $user): void
     {
         $this->createdBy = $user;
     }
 
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      * @return void
      */
-    public function setUpdatedBy(object|int|string $user): void
+    public function setUpdatedBy(object|int|string|null $user): void
     {
         $this->updatedBy = $user;
     }
 
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      * @return void
      */
-    public function setDeletedBy(object|int|string $user): void
+    public function setDeletedBy(object|int|string|null $user): void
     {
         $this->deletedBy = $user;
     }
 
     /**
-     * @return int|object|string
+     * @return int|object|string|null
      */
-    public function getCreatedBy(): object|int|string
+    public function getCreatedBy(): object|int|string|null
     {
         return $this->createdBy;
     }
 
     /**
-     * @return object|int|string
+     * @return object|int|string|null
      */
-    public function getUpdatedBy(): object|int|string
+    public function getUpdatedBy(): object|int|string|null
     {
         return $this->updatedBy;
     }
