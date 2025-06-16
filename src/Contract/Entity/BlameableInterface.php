@@ -7,29 +7,29 @@ namespace NetBull\DoctrineBehaviors\Contract\Entity;
 interface BlameableInterface
 {
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      */
-    public function setCreatedBy(object|int|string $user): void;
+    public function setCreatedBy(object|int|string|null $user): void;
 
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      */
-    public function setUpdatedBy(object|int|string $user): void;
+    public function setUpdatedBy(object|int|string|null $user): void;
 
     /**
-     * @param object|int|string $user
+     * @param object|int|string|null $user
      */
-    public function setDeletedBy(object|int|string $user): void;
+    public function setDeletedBy(object|int|string|null $user): void;
 
     /**
-     * @return int|object|string
+     * @return int|object|string|null
      */
-    public function getCreatedBy(): object|int|string;
+    public function getCreatedBy(): object|int|string|null;
 
     /**
-     * @return int|object|string
+     * @return int|object|string|null
      */
-    public function getUpdatedBy(): object|int|string;
+    public function getUpdatedBy(): object|int|string|null;
 
     /**
      * @return int|object|string|null
