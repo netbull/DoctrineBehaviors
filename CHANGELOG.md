@@ -1,3 +1,10 @@
+## [7.0.6](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.5...v7.0.6) (2025-06-16)
+
+
+### Bug Fixes
+
+* access property before inizialization ([770571d](https://github.com/netbull/DoctrineBehaviors/commit/770571dda39fe099bfdc8360a438453a31c5e628))
+
 ## [7.0.5](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.4...v7.0.5) (2025-06-13)
 
 
