@@ -1,3 +1,10 @@
+## [7.0.10](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.9...v7.0.10) (2025-11-21)
+
+
+### Bug Fixes
+
+* allow versions ([6a69ecc](https://github.com/netbull/DoctrineBehaviors/commit/6a69eccc46eb732fbea5848390464b6c7f6c6565))
+
 ## [7.0.8](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.7...v7.0.8) (2025-06-16)
 
 
