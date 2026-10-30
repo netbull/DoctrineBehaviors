@@ -16,8 +16,8 @@ trait TranslatableMethodsTrait
      */
     public function getTranslations(): Collection
     {
-        // initialize collection, usually in ctor
-        if ($this->translations === null) {
+        // typed property may be uninitialized on a freshly constructed entity: isset() is safe, "=== null" throws
+        if (! isset($this->translations)) {
             $this->translations = new ArrayCollection();
         }
 
@@ -43,8 +43,8 @@ trait TranslatableMethodsTrait
      */
     public function getNewTranslations(): Collection
     {
-        // initialize collection, usually in ctor
-        if ($this->newTranslations === null) {
+        // typed property may be uninitialized on a freshly constructed entity: isset() is safe, "=== null" throws
+        if (! isset($this->newTranslations)) {
             $this->newTranslations = new ArrayCollection();
         }
 

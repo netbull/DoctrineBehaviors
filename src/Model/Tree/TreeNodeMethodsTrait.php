@@ -125,8 +125,8 @@ trait TreeNodeMethodsTrait
      */
     public function getChildNodes(): Collection
     {
-        // set default value as in entity constructors
-        if ($this->childNodes === null) {
+        // typed property may be uninitialized on a freshly constructed entity: isset() is safe, "=== null" throws
+        if (! isset($this->childNodes)) {
             $this->childNodes = new ArrayCollection();
         }
 
