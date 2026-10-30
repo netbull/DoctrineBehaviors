@@ -1,3 +1,10 @@
+## [7.0.11](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.10...v7.0.11) (2026-10-30)
+
+
+### Bug Fixes
+
+* lazy-initialize typed collection properties on freshly constructed entities ([75926f2](https://github.com/netbull/DoctrineBehaviors/commit/75926f2184e52625d972c876e2e5c1d3a2287816))
+
 ## [7.0.10](https://github.com/netbull/DoctrineBehaviors/compare/v7.0.9...v7.0.10) (2025-11-21)
 
 
